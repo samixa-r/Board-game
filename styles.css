@@ -1,0 +1,476 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: url('rainbow.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.game-container {
+    text-align: center ; 
+    background: white;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    max-width: 1150px;
+    transition: all 0.3s ease;
+}
+
+.game-container:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+}
+
+h1 {
+    color: #ff6f61;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.game-intro {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: #f0f8ff;
+    border: 4px solid #444;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 1000px;
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.row.reverse {
+    flex-direction: row-reverse;
+}
+
+.cell {
+    width: 110px;
+    height: 110px;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #555;
+    border-radius: 15px;
+    margin: 5px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.cell:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cell.shortcut {
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    color: #333;
+    font-weight: bold;
+    border: 2px dashed #888;
+}
+
+.cell.trap {
+    background: linear-gradient(135deg, #ddbe0c, #e8c602);
+    color: black;
+    font-weight: bold;
+    border: 2px dotted #888;
+}
+
+.cell.orange-trap {
+    background: orange;
+    color: black;
+    font-weight: bold;
+    border: 2px dotted #888;
+}
+
+.cell.color1 {
+    background: linear-gradient(135deg, #3443ec, #c2e9fb); /* blue */
+}
+
+.cell.color2 {
+    background: linear-gradient(135deg, #e384c8, #fc3dc3); /* pink*/
+}
+
+.cell.color3 {
+    background: linear-gradient(135deg, #d4fc79, #20cb37); /* green */
+}
+
+.cell.color4 {
+    background: linear-gradient(135deg, #e83232, #d32e29); /* red */
+}
+
+.cell.color5 {
+    background: linear-gradient(135deg, #ad6af0, #6b37e5); /* purple*/
+}
+
+
+.player {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ff6f61;
+    box-shadow: 0 0 10px rgba(255, 111, 97, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+}
+
+.player2 {
+    background: #6b5b95;
+    box-shadow: 0 0 10px rgba(107, 91, 149, 0.7);
+}
+
+.player img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.controls {
+    margin-top: 30px;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(255, 94, 125, 0.5);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #ff4a3d, #ff6a8b);
+    transform: scale(1.05);
+    box-shadow: 0 5px 12px rgba(255, 94, 125, 0.7);
+}
+
+button:disabled {
+    background: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+#diceResult, #turn {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Player Score Styles */
+.board-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.player-score-side {
+    display: none; /* Hidden until game starts */
+    width: 120px;
+    padding: 15px;
+    background: #fefefe;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-weight: bold;
+}
+
+.left-score {
+    order: 1;
+}
+
+.board {
+    order: 2;
+}
+
+.right-score {
+    order: 3;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.modal-content-no-background {
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px;
+    position: relative;
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Rename Modal Specific Styles */
+#renameModal label, #renameModal input {
+    display: block;
+    margin-top: 10px;
+}
+
+#renameModal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Make sure padding doesn't affect width */
+}
+
+#renameModal label {
+    font-size: 18px;
+}
+
+#renameModal input {
+    font-size: 16px;
+}
+
+/* Trivia Modal Specific Styles */
+#triviaModal {
+  z-index: 2;
+}
+
+#triviaModal h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.trivia-answers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.answer-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.answer-button:hover {
+  background: linear-gradient(135deg, #4c6698, #633a82);
+}
+
+.answer-button.correct {
+    background: linear-gradient(135deg, #4CAF50, #66BB6A); /* Green shades for correct answer */
+    color: white;
+}
+
+.answer-button.incorrect {
+    background: linear-gradient(135deg, #F44336, #E57373); /* Red shades for incorrect answer */
+    color: white;
+}
+
+#triviaResult {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #333;
+}
+
+/* How to Play Button */
+.how-to-play-btn {
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.how-to-play-btn:hover {
+    background: #4cae4c;
+}
+
+/* Shortcut and Trap indicators in How to Play */
+.indicator {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.shortcut-indicator {
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    border: 2px dashed #888;
+    font-size: 1em;
+    width: 24px;            
+    height: 24px;           
+    line-height: 24px;      
+}
+
+.trap-indicator {
+    background: #ffdb0f;
+    border: 2px dotted #888;
+    width: 24px;            
+    height: 24px;           
+    line-height: 24px;      
+}
+
+.orange-trap-indicator {
+    background: orange;
+    border: 2px dotted #888;
+    width: 24px;            
+    height: 24px;           
+    line-height: 24px;      
+}
+
+#renameModal h2,
+#howToPlayModal h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+#howToPlayModal p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+/* Character Selection Styles */
+.character-selection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.character-selection img {
+    width: 80px;
+    height: 80px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.character-selection img:hover {
+    border-color: #4CAF50;
+}
+
+.character-selection img.selected {
+    border-color: #007bff;
+}
+
+.achievements {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .achievement {
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    text-align: center;
+    animation: fadeInOut 5s ease forwards;
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-10px); }
+  }
+  
+    #canvasWrapper {
+      display: none; /* Hidden initially */
+    }
